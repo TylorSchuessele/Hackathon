@@ -1,10 +1,19 @@
 <resources>
     <string name="app_name">Hackville</string>
+    <string-array name="interests">
+        <item>General Chat</item>
+        <item>Cars</item>
+        <item>Sports</item>
+        <item>Vacations</item>
+        <item>Gardening</item>
+        <item>Music</item>
+        <item>Books</item>
+        <item>Movies</item>
+    </string-array>
     <string name="text_to_speech_label">Would you like this application to read text to you?</string>
     <string name="button_yes_label">Yes</string>
     <string name="button_no_label">No</string>
 
 <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-
 </resources>
