@@ -1,3 +1,16 @@
 <resources>
     <string name="app_name">Hackville</string>
+
+    <string-array name="interests">
+        <item>General Chat</item>
+        <item>Cars</item>
+        <item>Sports</item>
+        <item>Vacations</item>
+        <item>Gardening</item>
+        <item>Music</item>
+        <item>Books</item>
+        <item>Movies</item>
+
+    </string-array>
+
 </resources>
