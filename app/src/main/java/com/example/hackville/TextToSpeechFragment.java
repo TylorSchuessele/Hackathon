@@ -3,20 +3,21 @@ package com.example.hackville;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.TextView;
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class TextToSpeechFragment extends Fragment {
 
-    private Button button;
-    private Button button2;
+    private Button btnYes;
+    private Button btnNo;
 
     CallBackInterface callBackInterface;
 
@@ -33,13 +34,15 @@ public class TextToSpeechFragment extends Fragment {
 //            getActivity().getFragmentManager().beginTransaction().remove(test).commit();
             if (callBackInterface != null){
 //                callBackInterface.callBackMethod();
-                if (view.getId() == R.id.button){
-                    callBackInterface.yestTest();
+                if (view.getId() == R.id.button_yes){
+                    //callBackInterface.yestTest();
+                    callBackInterface.textToSpeech("Yes");
                 }else{
-                    callBackInterface.noTest();
+                    //callBackInterface.noTest();
+                    callBackInterface.textToSpeech("No");
                 }
 
-                callBackInterface.testCallback();
+                //callBackInterface.testCallback();
             }
         }
     };
@@ -55,15 +58,12 @@ public class TextToSpeechFragment extends Fragment {
 
         View view =  inflater.inflate(R.layout.layout_text_to_speech, container, false);
 
-        button = view.findViewById(R.id.button);
-        button2 = view.findViewById(R.id.button2);
+        btnYes = view.findViewById(R.id.button_yes);
+        btnNo = view.findViewById(R.id.button_no);
 
-        button.setOnClickListener(loginListener);
-        button2.setOnClickListener(loginListener);
+        btnYes.setOnClickListener(loginListener);
+        btnNo.setOnClickListener(loginListener);
 
         return view;
-
-
     }
-
 }
