@@ -1,5 +1,6 @@
 package com.example.hackville;
 
+import android.content.Intent;
 import android.speech.tts.TextToSpeech;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -23,6 +24,10 @@ public class MainActivity extends AppCompatActivity implements CallBackInterface
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        /*
+        Intent intent = new Intent(this, ChooseTopicActivity.class);
+        startActivity(intent);
+        */
         // Initialize Text to speech
         tts = new TextToSpeech(getApplicationContext(), new TextToSpeech.OnInitListener() {
             @Override
