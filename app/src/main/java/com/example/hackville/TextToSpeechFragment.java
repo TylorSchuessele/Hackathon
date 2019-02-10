@@ -8,17 +8,21 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class TextToSpeechFragment extends Fragment {
 
-    private Button btnYes;
-    private Button btnNo;
+    //TTS string
+    public final String TTS_MESSAGE = "This button will read the text currently on the screen. Green button = Ok";
+
+    //Views
+    public ImageButton btnSpeaker;
+    public Button btnOk;
 
     CallBackInterface callBackInterface;
-
     public void setCallBackInterface(CallBackInterface callBackInterface){
         this.callBackInterface = callBackInterface;
     }
@@ -56,11 +60,22 @@ public class TextToSpeechFragment extends Fragment {
 
         View view =  inflater.inflate(R.layout.layout_text_to_speech, container, false);
 
-        btnYes = view.findViewById(R.id.button_yes);
-        btnNo = view.findViewById(R.id.button_no);
+        //Init views
+        btnSpeaker = view.findViewById(R.id.button_speak);
+        btnSpeaker.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                callBackInterface.textToSpeech(TTS_MESSAGE);
+            }
+        });
 
-        btnYes.setOnClickListener(loginListener);
-        btnNo.setOnClickListener(loginListener);
+        btnOk = view.findViewById(R.id.button_ok);
+        btnOk.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                callBackInterface.goToLogin();
+            }
+        });
 
         return view;
     }

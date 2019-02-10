@@ -93,11 +93,13 @@ public class MainActivity extends AppCompatActivity implements CallBackInterface
         super.onDestroy();
     }
 
+
     //endregion
 
     //region Firebase Auth
 
     private void updateUI(FirebaseUser currentUser) {
+
 
     }
 
