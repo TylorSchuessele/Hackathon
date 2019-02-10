@@ -17,17 +17,17 @@ public class InterestListAdapter extends  RecyclerView.Adapter<InterestListAdapt
 
 
     // Contructor
-    public InterestListAdapter(Context context, LinkedList<String> interestList) {
+    InterestListAdapter(Context context, LinkedList<String> interestList) {
         mInflater = LayoutInflater.from(context);
         this.mInterestList = interestList;
     }
 
     class InterestViewHolder extends RecyclerView.ViewHolder {
 
-        public final TextView interestItemView;
+        private final TextView interestItemView;
         final InterestListAdapter mAdapter;
 
-        public InterestViewHolder(View itemView, InterestListAdapter adapter) {
+        private InterestViewHolder(View itemView, InterestListAdapter adapter) {
             super(itemView);
             interestItemView = itemView.findViewById(R.id._interest);
             this.mAdapter = adapter;
@@ -36,14 +36,15 @@ public class InterestListAdapter extends  RecyclerView.Adapter<InterestListAdapt
     }
 
 
+    @NonNull
     @Override
-    public InterestViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public InterestViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View mItemView = mInflater.inflate(R.layout.interests_item, parent, false);
         return new InterestViewHolder(mItemView, this);
     }
 
     @Override
-    public void onBindViewHolder(InterestViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull InterestViewHolder holder, int position) {
         String mCurrent = mInterestList.get(position);
         holder.interestItemView.setText(mCurrent);
     }
