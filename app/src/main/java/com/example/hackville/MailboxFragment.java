@@ -14,9 +14,15 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ListView;
 
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -34,7 +40,7 @@ public class MailboxFragment extends Fragment {
     private GenericListAdapter mAdapter;
 
     // List of interests
-    private  LinkedList<String> contacts = new LinkedList<>();
+    private LinkedList<String> contacts = new LinkedList<>();
 
     // New chat button
     private Button newButton;
@@ -54,7 +60,8 @@ public class MailboxFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View view =  inflater.inflate(R.layout.fragment_mailbox, container, false);
+        View view = inflater.inflate(R.layout.fragment_mailbox, container, false);
+
 
         final String[] nameArray = {"Nick", "Thomas", "Tylor", "Mark", "Davis Campus", "Ahmed", "Philips Hue", "Connor", "Justine"};
         for (int i = 0; i < nameArray.length; i++) {
@@ -82,6 +89,7 @@ public class MailboxFragment extends Fragment {
             }
         });
 
+
         mAdapter = new GenericListAdapter(getActivity(), contacts);
 
         recyclerViewMail.setAdapter(mAdapter);
@@ -98,7 +106,23 @@ public class MailboxFragment extends Fragment {
 
         return view;
     }
-    public void newClick(View view) {
-    }
 
+    public void fetchNames() {
+        String email = MainActivity.Email;
+        DocumentReference mDocRef = FirebaseFirestore.getInstance().document("Users/" + email + "/PenPals/");
+        mDocRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                if (documentSnapshot.exists()) {
+                    Map<String, Object> myData = documentSnapshot.getData();
+
+                }
+            }
+        });
+
+    }
 }
+
+
+
+

@@ -1,10 +1,8 @@
 package com.example.hackville;
 
-import android.content.Intent;
 import android.net.Uri;
 import android.speech.tts.TextToSpeech;
 import android.support.annotation.NonNull;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
@@ -30,31 +28,36 @@ import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 
+
+import java.util.HashMap;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.Locale;
+import java.util.Map;
 
 
-public class MainActivity extends AppCompatActivity implements CallBackInterface, GoogleApiClient.OnConnectionFailedListener {
+public class MainActivity extends AppCompatActivity implements CallBackInterface {
 
     private FirebaseAuth mAuth;
     public static FragmentManager fragmentManager;
     private TextToSpeech tts;
     private static float TTS_PITCH = 1f; // The pitch for the tts bot
     private static final String TAG = "MainActivity";
+
     GoogleApiClient mGoogleApiClient;
     private static int RC_SIGN_IN = 9001;
     private String lang = Locale.getDefault().getLanguage();
     private Locale local = Locale.getDefault();
     private String transTxt;
+
 
     //region lifecycle
 
@@ -62,7 +65,6 @@ public class MainActivity extends AppCompatActivity implements CallBackInterface
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         mAuth = FirebaseAuth.getInstance();
 
         Log.w(TAG,local.toString());
@@ -78,6 +80,7 @@ public class MainActivity extends AppCompatActivity implements CallBackInterface
 
             }
         });
+
 
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.web_client_id))
@@ -109,6 +112,14 @@ public class MainActivity extends AppCompatActivity implements CallBackInterface
 
         //fragmentManager.beginTransaction().replace(R.id.container, new LoginPage(), null).commit();
         //fragmentManager.beginTransaction().add(R.id.container, new LoginPage(), null).commit();
+    }
+
+
+    public void saveQuote(){
+        Map<String, Object> saveData = new HashMap<String, Object>();
+        saveData.put("quote", "Hello");
+        saveData.put("author", "Author");
+        mDocRef.set(saveData);
     }
 
     @Override
@@ -203,7 +214,7 @@ public class MainActivity extends AppCompatActivity implements CallBackInterface
     //region Firebase Auth
 
     private void updateUI(FirebaseUser currentUser) {
-
+        Email = currentUser.getEmail();
 
     }
 
@@ -234,7 +245,7 @@ public class MainActivity extends AppCompatActivity implements CallBackInterface
     @Override
     public void textToSpeech(String message) {
         Log.d("MainActivity", message);
-        tts.speak(message, TextToSpeech.QUEUE_ADD, null);
+        tts.speak(message, TextToSpeech.QUEUE_FLUSH, null);
     }
 
     /**
@@ -268,9 +279,11 @@ public class MainActivity extends AppCompatActivity implements CallBackInterface
     //region firebase calls
     @Override
     public void googleLogin() {
+
         Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);
         startActivityForResult(signInIntent, RC_SIGN_IN);
         goToMailbox();
+
     }
 
     @Override
@@ -285,6 +298,7 @@ public class MainActivity extends AppCompatActivity implements CallBackInterface
                             FirebaseUser user = mAuth.getCurrentUser();
                             updateUI(user);
                             goToMailbox();
+
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "signInWithEmail:failure", task.getException());
@@ -335,7 +349,6 @@ public class MainActivity extends AppCompatActivity implements CallBackInterface
     //endregion
 
     //endregion
-
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -384,7 +397,5 @@ public class MainActivity extends AppCompatActivity implements CallBackInterface
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
 
     }
-
-
 
 }
