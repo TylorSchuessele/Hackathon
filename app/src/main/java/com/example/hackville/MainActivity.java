@@ -76,7 +76,7 @@ public class MainActivity extends AppCompatActivity implements CallBackInterface
     }
 
     @Override
-    public void testCallback() {
+    public void startLoginFragment() {
         fragmentManager.beginTransaction().replace(R.id.container, new LoginPage()).commit();
     }
 

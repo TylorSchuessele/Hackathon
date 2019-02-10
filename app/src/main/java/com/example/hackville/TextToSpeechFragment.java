@@ -16,36 +16,17 @@ import android.widget.Button;
  */
 public class TextToSpeechFragment extends Fragment {
 
-    private Button btnYes;
-    private Button btnNo;
+    //TTS string
+    public final String TTS_MESSAGE = "This button will read the text currently on the screen.";
+
+    //Views
+    public Button btnSpeaker;
+    public Button btnOk;
 
     CallBackInterface callBackInterface;
-
     public void setCallBackInterface(CallBackInterface callBackInterface){
         this.callBackInterface = callBackInterface;
     }
-
-    private View.OnClickListener loginListener = new View.OnClickListener(){
-
-        @Override
-        public void onClick(View view) {
-            //MainActivity.fragmentManager.beginTransaction().replace(R.id.container, new LoginPage(), null).commit();
-//            android.app.Fragment test = getActivity().getFragmentManager().findFragmentById(R.id.container);
-//            getActivity().getFragmentManager().beginTransaction().remove(test).commit();
-            if (callBackInterface != null){
-//                callBackInterface.callBackMethod();
-                if (view.getId() == R.id.button_yes){
-                    //callBackInterface.yestTest();
-                    callBackInterface.textToSpeech("Yes");
-                }else{
-                    //callBackInterface.noTest();
-                    callBackInterface.textToSpeech("No");
-                }
-
-                //callBackInterface.testCallback();
-            }
-        }
-    };
 
     public TextToSpeechFragment() {
         // Required empty public constructor
@@ -58,11 +39,22 @@ public class TextToSpeechFragment extends Fragment {
 
         View view =  inflater.inflate(R.layout.layout_text_to_speech, container, false);
 
-        btnYes = view.findViewById(R.id.button_yes);
-        btnNo = view.findViewById(R.id.button_no);
+        //Init views
+        btnSpeaker = view.findViewById(R.id.button_speak);
+        btnSpeaker.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                callBackInterface.textToSpeech(TTS_MESSAGE);
+            }
+        });
 
-        btnYes.setOnClickListener(loginListener);
-        btnNo.setOnClickListener(loginListener);
+        btnOk = view.findViewById(R.id.button_ok);
+        btnOk.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                callBackInterface.startLoginFragment();
+            }
+        });
 
         return view;
     }
