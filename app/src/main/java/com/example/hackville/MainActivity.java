@@ -1,15 +1,15 @@
 package com.example.hackville;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.speech.tts.TextToSpeech;
 import android.support.annotation.NonNull;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,29 +22,26 @@ import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
-import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.auth.GoogleAuthProvider;
 
 
-import java.util.HashMap;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.Locale;
-import java.util.Map;
 
 
-public class MainActivity extends AppCompatActivity implements CallBackInterface {
+public class MainActivity extends AppCompatActivity implements CallBackInterface, GoogleApiClient.OnConnectionFailedListener {
 
     private FirebaseAuth mAuth;
     public static FragmentManager fragmentManager;
@@ -114,13 +111,6 @@ public class MainActivity extends AppCompatActivity implements CallBackInterface
         //fragmentManager.beginTransaction().add(R.id.container, new LoginPage(), null).commit();
     }
 
-
-    public void saveQuote(){
-        Map<String, Object> saveData = new HashMap<String, Object>();
-        saveData.put("quote", "Hello");
-        saveData.put("author", "Author");
-        mDocRef.set(saveData);
-    }
 
     @Override
     public void translate(String text, String target) {
@@ -214,7 +204,6 @@ public class MainActivity extends AppCompatActivity implements CallBackInterface
     //region Firebase Auth
 
     private void updateUI(FirebaseUser currentUser) {
-        Email = currentUser.getEmail();
 
     }
 
@@ -398,4 +387,8 @@ public class MainActivity extends AppCompatActivity implements CallBackInterface
 
     }
 
+    @Override
+    public void onPointerCaptureChanged(boolean hasCapture) {
+
+    }
 }
