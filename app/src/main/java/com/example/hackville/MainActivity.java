@@ -156,7 +156,7 @@ public class MainActivity extends AppCompatActivity implements CallBackInterface
     @Override
     public void textToSpeech(String message) {
         Log.d("MainActivity", message);
-        tts.speak(message, TextToSpeech.QUEUE_FLUSH, null);
+        tts.speak(message, TextToSpeech.QUEUE_ADD, null);
     }
 
     //region callback methods
@@ -196,7 +196,9 @@ public class MainActivity extends AppCompatActivity implements CallBackInterface
                             Log.d(TAG, "signInWithEmail:success");
                             FirebaseUser user = mAuth.getCurrentUser();
                             updateUI(user);
-                            fragmentManager.beginTransaction().replace(R.id.container, new MailboxFragment()).commit();
+                            MailboxFragment mailboxFragment = new MailboxFragment();
+                            mailboxFragment.setCallBackInterface(MainActivity.this);
+                            fragmentManager.beginTransaction().replace(R.id.container, mailboxFragment).commit();
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "signInWithEmail:failure", task.getException());
