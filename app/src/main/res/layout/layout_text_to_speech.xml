@@ -43,8 +43,8 @@
     <Button
         android:id="@+id/button_ok"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:background="@android:color/holo_green_light"
+        android:layout_height="100dp"
+        android:background="#40FF5F"
         android:text="@string/button_ok_label"
         android:textColor="@android:color/white"
         android:textSize="60sp"

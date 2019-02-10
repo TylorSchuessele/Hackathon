@@ -16,49 +16,29 @@ import android.widget.ImageButton;
 public class TextToSpeechFragment extends Fragment {
 
     //TTS string
-    public final String TTS_MESSAGE = "This button will read the text currently on the screen. Green button = Ok";
+    private final String TTS_MESSAGE = "This button will read the text currently on the screen. Green button = Ok";
 
     //Views
-    public ImageButton btnSpeaker;
-    public Button btnOk;
+    private ImageButton btnSpeaker;
+    private Button btnOk;
+
+    //Holds the current view
+    private View view;
 
     CallBackInterface callBackInterface;
     public void setCallBackInterface(CallBackInterface callBackInterface){
         this.callBackInterface = callBackInterface;
     }
 
-    private View.OnClickListener loginListener = new View.OnClickListener(){
-
-        @Override
-        public void onClick(View view) {
-            //MainActivity.fragmentManager.beginTransaction().replace(R.id.container, new LoginPage(), null).commit();
-//            android.app.Fragment test = getActivity().getFragmentManager().findFragmentById(R.id.container);
-//            getActivity().getFragmentManager().beginTransaction().remove(test).commit();
-            if (callBackInterface != null){
-//                callBackInterface.callBackMethod();
-                if (view.getId() == R.id.button_ok){
-                    //callBackInterface.yestTest();
-                    callBackInterface.textToSpeech("Yes");
-                }else{
-                    //callBackInterface.noTest();
-                    callBackInterface.textToSpeech("No");
-                }
-
-                callBackInterface.goToLogin();
-            }
-        }
-    };
-
     public TextToSpeechFragment() {
         // Required empty public constructor
     }
-
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View view =  inflater.inflate(R.layout.layout_text_to_speech, container, false);
+        view =  inflater.inflate(R.layout.layout_text_to_speech, container, false);
 
         //Init views
         btnSpeaker = view.findViewById(R.id.button_speak);

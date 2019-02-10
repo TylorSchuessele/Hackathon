@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ListView;
 
 import java.util.ArrayList;
@@ -23,6 +24,8 @@ import java.util.List;
  */
 public class MailboxFragment extends Fragment {
 
+    //TTS string
+    private final String TTS_MESSAGE = "Green button = Find a new pen pal.";
 
     // RecyclerView of interests
     private RecyclerView recyclerViewMail;
@@ -35,11 +38,17 @@ public class MailboxFragment extends Fragment {
 
     // New chat button
     private Button newButton;
+    private ImageButton btnSpeak;
 
     public MailboxFragment() {
         // Required empty public constructor
     }
 
+    //Set up callback
+    CallBackInterface callBackInterface;
+    public void setCallBackInterface(CallBackInterface callBackInterface){
+        this.callBackInterface = callBackInterface;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -47,7 +56,7 @@ public class MailboxFragment extends Fragment {
 
         View view =  inflater.inflate(R.layout.fragment_mailbox, container, false);
 
-        String[] nameArray = {"Nick", "Thomas", "Tylor", "Mark", "Davis Campus", "Ahmed", "Philips Hue", "Connor", "Justine"};
+        final String[] nameArray = {"Nick", "Thomas", "Tylor", "Mark", "Davis Campus", "Ahmed", "Philips Hue", "Connor", "Justine"};
         for (int i = 0; i < nameArray.length; i++) {
             contacts.addLast(nameArray[i]);
 
@@ -56,6 +65,21 @@ public class MailboxFragment extends Fragment {
         // Connects recyclerView
         recyclerViewMail = view.findViewById(R.id._recyclerViewMailBox);
         newButton = view.findViewById(R.id.new_button);
+
+        btnSpeak = view.findViewById(R.id.button_speak);
+        btnSpeak.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (callBackInterface != null) {
+                    callBackInterface.textToSpeech(TTS_MESSAGE);
+
+                    //Says all names
+                    for(int i = 0; i < nameArray.length; i++) {
+                        callBackInterface.textToSpeech(Integer.toString(i) + "." + nameArray[i]);
+                    }
+                }
+            }
+        });
 
         mAdapter = new GenericListAdapter(getActivity(), contacts);
 
