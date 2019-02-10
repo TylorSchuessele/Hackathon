@@ -3,13 +3,17 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:padding="6dp">
+    android:padding="6dp"
+    android:background="#eeeeee"
+>
 
-
-    <Button
+    <TextView
         android:id="@+id/_interest"
         style="@style/interest_title"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:background="#ffffff"
+
+        />
 
 </LinearLayout>

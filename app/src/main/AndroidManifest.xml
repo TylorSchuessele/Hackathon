@@ -10,7 +10,6 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".ReadChatActivity"></activity>
-        <activity android:name=".ChooseTopicActivity" />
         <activity android:name=".ComposeTextActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>
