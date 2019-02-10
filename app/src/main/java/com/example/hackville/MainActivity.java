@@ -169,6 +169,7 @@ public class MainActivity extends AppCompatActivity implements CallBackInterface
                             Log.d(TAG, "signInWithEmail:success");
                             FirebaseUser user = mAuth.getCurrentUser();
                             updateUI(user);
+                            fragmentManager.beginTransaction().replace(R.id.container, new MailboxFragment()).commit();
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "signInWithEmail:failure", task.getException());
@@ -193,6 +194,7 @@ public class MainActivity extends AppCompatActivity implements CallBackInterface
                             Log.d(TAG, "createUserWithEmail:success");
                             FirebaseUser user = mAuth.getCurrentUser();
                             updateUI(user);
+                            fragmentManager.beginTransaction().replace(R.id.container, new MailboxFragment()).commit();
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "createUserWithEmail:failure", task.getException());
