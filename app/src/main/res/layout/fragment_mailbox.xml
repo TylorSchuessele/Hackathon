@@ -21,20 +21,41 @@
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.6" />
+            app:layout_constraintVertical_bias="0.6" >
+
+        </android.support.v7.widget.RecyclerView>
 
 
         <Button
             android:id="@+id/new_button"
             android:layout_width="0dp"
-            android:layout_height="200dp"
+            android:layout_height="100dp"
             android:background="#40FF5F"
             android:text="@string/button_new_penpal"
-            android:textSize="24sp"
+            android:textColor="@android:color/white"
+            android:textSize="40sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <ImageButton
+            android:id="@+id/button_speak"
+            android:layout_width="0.5in"
+            android:layout_height="0.5in"
+            android:background="@android:color/holo_blue_light"
+            android:fontFamily="sans-serif-medium"
+            android:scaleType="centerInside"
+            android:src="@drawable/speaker_icon"
+            android:textColor="@android:color/white"
+            android:textSize="0sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0" />
+
 
     </android.support.constraint.ConstraintLayout>
 
