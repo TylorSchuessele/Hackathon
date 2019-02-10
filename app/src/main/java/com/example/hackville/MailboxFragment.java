@@ -78,11 +78,12 @@ public class MailboxFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 if (callBackInterface != null) {
+                    callBackInterface.stopTTS();
                     callBackInterface.textToSpeech(TTS_MESSAGE);
 
                     //Says all names
                     for(int i = 0; i < nameArray.length; i++) {
-                        callBackInterface.textToSpeech(Integer.toString(i) + "." + nameArray[i]);
+                        callBackInterface.textToSpeech(Integer.toString(i + 1) + "." + nameArray[i]);
                     }
                 }
             }
