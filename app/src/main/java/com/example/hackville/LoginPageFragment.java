@@ -85,6 +85,7 @@ public class LoginPageFragment extends Fragment {
 
                 if (id == R.id.btn_Google){
                     //TODO: Make google OAuth work
+                    callBackInterface.googleLogin();
                 }
 
                 //TODO: Add Facebook Login work
