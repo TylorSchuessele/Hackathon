@@ -3,9 +3,7 @@ package com.example.hackville;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,6 +26,28 @@ public class TextToSpeechFragment extends Fragment {
     public void setCallBackInterface(CallBackInterface callBackInterface){
         this.callBackInterface = callBackInterface;
     }
+
+    private View.OnClickListener loginListener = new View.OnClickListener(){
+
+        @Override
+        public void onClick(View view) {
+            //MainActivity.fragmentManager.beginTransaction().replace(R.id.container, new LoginPage(), null).commit();
+//            android.app.Fragment test = getActivity().getFragmentManager().findFragmentById(R.id.container);
+//            getActivity().getFragmentManager().beginTransaction().remove(test).commit();
+            if (callBackInterface != null){
+//                callBackInterface.callBackMethod();
+                if (view.getId() == R.id.button_yes){
+                    //callBackInterface.yestTest();
+                    callBackInterface.textToSpeech("Yes");
+                }else{
+                    //callBackInterface.noTest();
+                    callBackInterface.textToSpeech("No");
+                }
+
+                callBackInterface.goToLogin();
+            }
+        }
+    };
 
     public TextToSpeechFragment() {
         // Required empty public constructor
@@ -53,7 +73,7 @@ public class TextToSpeechFragment extends Fragment {
         btnOk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                callBackInterface.startLoginFragment();
+                callBackInterface.goToLogin();
             }
         });
 
