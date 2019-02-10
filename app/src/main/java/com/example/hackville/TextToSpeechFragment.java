@@ -36,7 +36,7 @@ public class TextToSpeechFragment extends Fragment {
 //            getActivity().getFragmentManager().beginTransaction().remove(test).commit();
             if (callBackInterface != null){
 //                callBackInterface.callBackMethod();
-                if (view.getId() == R.id.button_yes){
+                if (view.getId() == R.id.button_ok){
                     //callBackInterface.yestTest();
                     callBackInterface.textToSpeech("Yes");
                 }else{
