@@ -133,6 +133,13 @@ public class MainActivity extends AppCompatActivity implements CallBackInterface
         tts.speak(message, TextToSpeech.QUEUE_ADD, null);
     }
 
+    /**
+     * Stops the TTS
+     */
+    public void stopTTS() {
+        tts.stop();
+    }
+
     //region callback methods
 
     @Override
