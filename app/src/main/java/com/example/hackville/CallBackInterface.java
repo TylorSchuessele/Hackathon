@@ -1,8 +1,10 @@
 package com.example.hackville;
 
-public interface CallBackInterface {
-    void testCallback();
-    void yestTest();
-    void noTest();
+interface CallBackInterface {
     void textToSpeech(String message);
+    void makeToast(String message);
+    void goToLogin();
+    void googleLogin();
+    void login(String email, String pass);
+    void signUp(String email, String pass);
 }
