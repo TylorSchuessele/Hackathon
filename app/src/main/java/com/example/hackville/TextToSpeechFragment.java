@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -17,10 +18,10 @@ import android.widget.Button;
 public class TextToSpeechFragment extends Fragment {
 
     //TTS string
-    public final String TTS_MESSAGE = "This button will read the text currently on the screen.";
+    public final String TTS_MESSAGE = "This button will read the text currently on the screen. Green button = Ok";
 
     //Views
-    public Button btnSpeaker;
+    public ImageButton btnSpeaker;
     public Button btnOk;
 
     CallBackInterface callBackInterface;

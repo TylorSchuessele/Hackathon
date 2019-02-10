@@ -20,20 +20,20 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
+    <ImageButton
         android:id="@+id/button_speak"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
         android:background="@android:color/holo_blue_light"
-        android:drawableTop="@android:drawable/ic_lock_silent_mode_off"
         android:fontFamily="sans-serif-medium"
-        android:text="@string/button_speak_label"
+        android:scaleType="centerInside"
+        android:src="@drawable/speaker_icon"
         android:textColor="@android:color/white"
-        android:textSize="20sp"
+        android:textSize="0sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
