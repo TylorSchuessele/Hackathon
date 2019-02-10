@@ -23,7 +23,7 @@ import java.util.Locale;
 public class MainActivity extends AppCompatActivity implements CallBackInterface {
 
     private FirebaseAuth mAuth;
-    private static FragmentManager fragmentManager;
+    public static FragmentManager fragmentManager;
     private TextToSpeech tts;
     private static float TTS_PITCH = 1f; // The pitch for the tts bot
     private static final String TAG = "MainActivity";
