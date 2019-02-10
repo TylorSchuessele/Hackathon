@@ -8,4 +8,6 @@ interface CallBackInterface {
     void login(String email, String pass);
     void signUp(String email, String pass);
     void stopTTS();
+    void goToMailbox();
+    void translate(String text, String target);
 }
