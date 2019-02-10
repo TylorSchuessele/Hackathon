@@ -14,6 +14,8 @@
     <string name="button_yes_label">Yes</string>
     <string name="button_no_label">No</string>
 
+    <string name="button_new_penpal">Find a new Penpal</string>
+
     <string name="button_speak_label">Speak</string>
     <string name="button_ok_label">Ok</string>
     <string name="txt_Login">Login</string>
