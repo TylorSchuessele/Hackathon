@@ -1,46 +1,40 @@
 package com.example.hackville;
 
-import android.content.Intent;
 import android.net.Uri;
 import android.speech.tts.TextToSpeech;
 import android.support.annotation.NonNull;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
-import com.google.android.gms.auth.api.Auth;
-import com.google.android.gms.auth.api.signin.GoogleSignIn;
-import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
-import com.google.android.gms.auth.api.signin.GoogleSignInResult;
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.api.ApiException;
-import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 
 
-public class MainActivity extends AppCompatActivity implements CallBackInterface, GoogleApiClient.OnConnectionFailedListener {
+public class MainActivity extends AppCompatActivity implements CallBackInterface {
 
     private FirebaseAuth mAuth;
     public static FragmentManager fragmentManager;
     private TextToSpeech tts;
     private static float TTS_PITCH = 1f; // The pitch for the tts bot
     private static final String TAG = "MainActivity";
-    GoogleApiClient mGoogleApiClient;
-    private static int RC_SIGN_IN = 9001;
+    public static String Email;
+
+    private DocumentReference mDocRef = FirebaseFirestore.getInstance().document("Users/Test2");
 
     //region lifecycle
 
@@ -48,9 +42,9 @@ public class MainActivity extends AppCompatActivity implements CallBackInterface
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         mAuth = FirebaseAuth.getInstance();
 
+        saveQuote();
 
         // Initialize Text to speech
         tts = new TextToSpeech(getApplicationContext(), new TextToSpeech.OnInitListener() {
@@ -63,18 +57,6 @@ public class MainActivity extends AppCompatActivity implements CallBackInterface
 
             }
         });
-
-        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestIdToken(getString(R.string.web_client_id))
-                .requestEmail()
-                .build();
-
-        mGoogleApiClient = new GoogleApiClient.Builder(this)
-                .enableAutoManage(this,this)
-                .addApi(Auth.GOOGLE_SIGN_IN_API,gso)
-                .build();
-
-
 
         fragmentManager = getSupportFragmentManager();
 
@@ -94,6 +76,14 @@ public class MainActivity extends AppCompatActivity implements CallBackInterface
 
         //fragmentManager.beginTransaction().replace(R.id.container, new LoginPage(), null).commit();
         //fragmentManager.beginTransaction().add(R.id.container, new LoginPage(), null).commit();
+    }
+
+
+    public void saveQuote(){
+        Map<String, Object> saveData = new HashMap<String, Object>();
+        saveData.put("quote", "Hello");
+        saveData.put("author", "Author");
+        mDocRef.set(saveData);
     }
 
     @Override
@@ -125,7 +115,7 @@ public class MainActivity extends AppCompatActivity implements CallBackInterface
     //region Firebase Auth
 
     private void updateUI(FirebaseUser currentUser) {
-
+        Email = currentUser.getEmail();
 
     }
 
@@ -156,7 +146,7 @@ public class MainActivity extends AppCompatActivity implements CallBackInterface
     @Override
     public void textToSpeech(String message) {
         Log.d("MainActivity", message);
-        tts.speak(message, TextToSpeech.QUEUE_ADD, null);
+        tts.speak(message, TextToSpeech.QUEUE_FLUSH, null);
     }
 
     //region callback methods
@@ -181,8 +171,7 @@ public class MainActivity extends AppCompatActivity implements CallBackInterface
     //region firebase calls
     @Override
     public void googleLogin() {
-        Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);
-        startActivityForResult(signInIntent, RC_SIGN_IN);
+
     }
 
     @Override
@@ -196,9 +185,6 @@ public class MainActivity extends AppCompatActivity implements CallBackInterface
                             Log.d(TAG, "signInWithEmail:success");
                             FirebaseUser user = mAuth.getCurrentUser();
                             updateUI(user);
-                            MailboxFragment mailboxFragment = new MailboxFragment();
-                            mailboxFragment.setCallBackInterface(MainActivity.this);
-                            fragmentManager.beginTransaction().replace(R.id.container, mailboxFragment).commit();
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "signInWithEmail:failure", task.getException());
@@ -223,7 +209,6 @@ public class MainActivity extends AppCompatActivity implements CallBackInterface
                             Log.d(TAG, "createUserWithEmail:success");
                             FirebaseUser user = mAuth.getCurrentUser();
                             updateUI(user);
-                            fragmentManager.beginTransaction().replace(R.id.container, new MailboxFragment()).commit();
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "createUserWithEmail:failure", task.getException());
@@ -239,53 +224,4 @@ public class MainActivity extends AppCompatActivity implements CallBackInterface
     //endregion
 
     //endregion
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        // Result returned from launching the Intent from GoogleSignInApi.getSignInIntent(...);
-        if (requestCode == RC_SIGN_IN) {
-            Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
-            try {
-                // Google Sign In was successful, authenticate with Firebase
-                GoogleSignInAccount account = task.getResult(ApiException.class);
-                firebaseAuthWithGoogle(account);
-            } catch (ApiException e) {
-                // Google Sign In failed, update UI appropriately
-                Log.w(TAG, "Google sign in failed", e);
-                // ...
-            }
-        }
-    }
-
-    private void firebaseAuthWithGoogle(GoogleSignInAccount acct) {
-        Log.d(TAG, "firebaseAuthWithGoogle:" + acct.getId());
-
-        AuthCredential credential = GoogleAuthProvider.getCredential(acct.getIdToken(), null);
-        mAuth.signInWithCredential(credential)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            // Sign in success, update UI with the signed-in user's information
-                            Log.d(TAG, "signInWithCredential:success");
-                            FirebaseUser user = mAuth.getCurrentUser();
-                            updateUI(user);
-                        } else {
-                            // If sign in fails, display a message to the user.
-                            Log.w(TAG, "signInWithCredential:failure", task.getException());
-                            Snackbar.make(findViewById(R.id.container), "Authentication Failed.", Snackbar.LENGTH_SHORT).show();
-                            updateUI(null);
-                        }
-
-                        // ...
-                    }
-                });
-    }
-
-    @Override
-    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
-
-    }
 }
