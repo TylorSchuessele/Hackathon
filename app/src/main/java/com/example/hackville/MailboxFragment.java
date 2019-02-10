@@ -88,6 +88,7 @@ public class MailboxFragment extends Fragment {
             }
         });
 
+
         mAdapter = new GenericListAdapter(getActivity(), contacts);
 
         recyclerViewMail.setAdapter(mAdapter);
@@ -105,7 +106,7 @@ public class MailboxFragment extends Fragment {
         return view;
     }
 
-    public void fetchPals() {
+    public void fetchNames() {
         String email = MainActivity.Email;
         DocumentReference mDocRef = FirebaseFirestore.getInstance().document("Users/" + email + "/PenPals/");
         mDocRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
