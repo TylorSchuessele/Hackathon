@@ -45,6 +45,7 @@ public class TextToSpeechFragment extends Fragment {
         btnSpeaker.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                callBackInterface.stopTTS();
                 callBackInterface.textToSpeech(TTS_MESSAGE);
             }
         });
