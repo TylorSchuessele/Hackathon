@@ -4,7 +4,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 
 import java.util.LinkedList;
 
@@ -32,7 +31,7 @@ public class ChooseTopicActivity extends AppCompatActivity {
         }
 
         // Connects recyclerView
-        recyclerView = (RecyclerView) findViewById(R.id._recyclerView);
+        recyclerView = findViewById(R.id._recyclerView);
 
         mAdapter = new InterestListAdapter(this, interests);
 
