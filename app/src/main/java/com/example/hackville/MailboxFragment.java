@@ -2,21 +2,16 @@ package com.example.hackville;
 
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.ListView;
-
-import java.util.ArrayList;
 import java.util.LinkedList;
-import java.util.List;
 
 
 /**
@@ -34,7 +29,7 @@ public class MailboxFragment extends Fragment {
     private GenericListAdapter mAdapter;
 
     // List of interests
-    private  LinkedList<String> contacts = new LinkedList<>();
+    private LinkedList<String> contacts = new LinkedList<>();
 
     // New chat button
     private Button newButton;
@@ -51,10 +46,11 @@ public class MailboxFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View view =  inflater.inflate(R.layout.fragment_mailbox, container, false);
+        View view = inflater.inflate(R.layout.fragment_mailbox, container, false);
+
 
         final String[] nameArray = {"Nick", "Thomas", "Tylor", "Mark", "Davis Campus", "Ahmed", "Philips Hue", "Connor", "Justine"};
         for (int i = 0; i < nameArray.length; i++) {
@@ -71,15 +67,17 @@ public class MailboxFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 if (callBackInterface != null) {
+                    callBackInterface.stopTTS();
                     callBackInterface.textToSpeech(TTS_MESSAGE);
 
                     //Says all names
                     for(int i = 0; i < nameArray.length; i++) {
-                        callBackInterface.textToSpeech(Integer.toString(i) + "." + nameArray[i]);
+                        callBackInterface.textToSpeech(Integer.toString(i + 1) + "." + nameArray[i]);
                     }
                 }
             }
         });
+
 
         mAdapter = new GenericListAdapter(getActivity(), contacts);
 
@@ -97,7 +95,9 @@ public class MailboxFragment extends Fragment {
 
         return view;
     }
-    public void newClick(View view) {
-    }
 
 }
+
+
+
+

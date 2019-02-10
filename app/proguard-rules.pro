@@ -22,3 +22,16 @@
 
 #-keepattributes Signature
 #-keepattributes *Annotation*
+
+-keepclassmembers class * {
+ @com.google.api.client.util.Key <fields>;
+}
+-keepattributes Signature,RuntimeVisibleAnnotations,AnnotationDefault
+
+
+-dontwarn org.joda.convert.**
+-dontwarn com.google.**
+-dontwarn com.google.auto.**
+-dontwarn autovalue.shaded.com.**
+-dontwarn sun.misc.Unsafe
+-dontwarn javax.lang.model.element.Modifier

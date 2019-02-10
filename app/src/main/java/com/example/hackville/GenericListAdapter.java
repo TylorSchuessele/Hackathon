@@ -56,14 +56,11 @@ public class GenericListAdapter extends  RecyclerView.Adapter<GenericListAdapter
 
             // Checking if the current fragment is Choose topic
             if(mInterestList.get(0).equals(interestsArray[0])){
-                // Change the word in the mWordList.
-                mInterestList.set(mPosition, "Clicked! ");
-                // Notify the adapter, that the data has changed so it can
-                // update the RecyclerView to display the data.
-                mAdapter.notifyDataSetChanged();
+                MainActivity.fragmentManager.beginTransaction().replace(R.id.container, new ChatFragment()).commit();
+
             }
             else{
-
+                MainActivity.fragmentManager.beginTransaction().replace(R.id.container, new ChatFragment()).commit();
 
             }
 
